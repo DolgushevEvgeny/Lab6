@@ -31,7 +31,7 @@ void CStudent::SetAge(int age)
 	{
 		throw domain_error("It is impossible to establish the age less than it actually is.");
 	}
-	if ((age < 14) && (age > 60))
+	if ((age < 14) | (age > 60))
 	{
 		throw out_of_range("Student age out of range.");
 	}
