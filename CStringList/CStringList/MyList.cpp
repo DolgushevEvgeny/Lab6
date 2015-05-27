@@ -58,43 +58,35 @@ void CMyList::Insert(const std::string &value, std::shared_ptr<CRecord> pointer)
 	}
 	else
 	{
-		pointer->SetNext(newElement);
 		m_last = newElement;
 	}
-	
+	pointer->SetNext(newElement);
 
 }
 
 void CMyList::Delete(const std::shared_ptr<CRecord> current)
 {
+	auto nextElement = current->GetNextItem();
 	auto prevElement = current->GetPrevItem();
+	if (nextElement)
+	{
+		nextElement->SetPrev(prevElement);
+	}
+	else
+	{
+		m_last = prevElement;
+	}
 
 	if (prevElement)
 	{
-		auto nextElement = current->GetNextItem();
-		if (nextElement)
-		{
-			nextElement->SetPrev(prevElement);
-			prevElement->SetNext(nextElement);
-
-			return;
-		}
-		m_last = prevElement;
-
-		return;
+		prevElement->SetNext(nextElement);
 	}
-
-	auto nextElement = current->GetNextItem();
-	if (nextElement)
+	else
 	{
-		nextElement->SetPrev(shared_ptr<CRecord>());
 		m_first = nextElement;
-
-		return;
 	}
-	
-	m_first = current->GetNextItem();
-	m_last = shared_ptr<CRecord>();
+	current->SetNext(nullptr);
+	current->SetPrev(nullptr);
 }
 
 CMyList::~CMyList()

@@ -25,12 +25,12 @@ string CRecord::GetItemValue() const
 	return m_value;
 }
 
-void CRecord::SetPrev(std::shared_ptr<CRecord> &prev)
+void CRecord::SetPrev(const std::shared_ptr<CRecord> &prev)
 {
 	m_prev = prev;
 }
 
-void CRecord::SetNext(std::shared_ptr<CRecord> &next)
+void CRecord::SetNext(const std::shared_ptr<CRecord> &next)
 {
 	m_next = next;
 }
