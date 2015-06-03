@@ -6,11 +6,15 @@ using namespace std;
 
 CTriangle::CTriangle(double side1, double side2, double side3)
 {
-	if (side1 <= 0 || side2 <= 0 || side3 <= 0)
+	if (side1 < 0 || side2 < 0 || side3 < 0)
 	{
 		throw invalid_argument("One or more sides of triangle must be more than zero!");
 	}
 	if (side1 > side2 + side3 || side2 > side1 + side3 || side3 > side1 + side2)
+	{
+		throw domain_error("Uncorrect sides of triangle");
+	}
+	if ((side1 == 0 && side2 != side3) || (side2 == 0 && side1 != side3) || (side3 == 0 && side2 != side1))
 	{
 		throw domain_error("Uncorrect sides of triangle");
 	}

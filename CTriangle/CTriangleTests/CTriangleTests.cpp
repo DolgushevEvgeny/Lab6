@@ -12,12 +12,23 @@ BOOST_AUTO_TEST_CASE(CanCreateTriangleWithCorrectParametrs)
 	BOOST_CHECK_NO_THROW(CTriangle(3, 4, 6));
 	BOOST_CHECK_NO_THROW(CTriangle(2.5, 4.5, 4.5));
 	BOOST_CHECK_NO_THROW(CTriangle(1, 2, 3));
+	BOOST_CHECK_NO_THROW(CTriangle(3, 3, 0));
+	BOOST_CHECK_NO_THROW(CTriangle(3, 0, 3));
+	BOOST_CHECK_NO_THROW(CTriangle(0, 3, 3));
 }
 
 BOOST_AUTO_TEST_CASE(CantCreateTriangleWithUncorrectParametrs)
 {
-	BOOST_REQUIRE_THROW(CTriangle(3.2, 4, -5.1), invalid_argument);
-	BOOST_REQUIRE_THROW(CTriangle(3, 4, 0), invalid_argument);
+	{
+		BOOST_REQUIRE_THROW(CTriangle(3.2, 4, -5.1), invalid_argument);
+		BOOST_REQUIRE_THROW(CTriangle(3.2, -4, 5.1), invalid_argument);
+		BOOST_REQUIRE_THROW(CTriangle(-3.2, 4, 5.1), invalid_argument);
+	}
+	{
+		BOOST_REQUIRE_THROW(CTriangle(3, 4, 0), domain_error);
+		BOOST_REQUIRE_THROW(CTriangle(3, 0, 4), domain_error);
+		BOOST_REQUIRE_THROW(CTriangle(0, 4, 3), domain_error);
+	}
 }
 
 BOOST_AUTO_TEST_CASE(CantCreateTriangleWithUncorrectSides)
@@ -38,7 +49,7 @@ BOOST_AUTO_TEST_CASE(TriangleHavePerimetr)
 	}
 	{
 		CTriangle triangle(5.75, 6.24, 10.50);
-		BOOST_CHECK_EQUAL(triangle.GetPerimeter(), 22.49);
+		BOOST_CHECK_CLOSE(triangle.GetPerimeter(), 22.49, 0.001);
 	}
 }
 
@@ -50,11 +61,11 @@ BOOST_AUTO_TEST_CASE(TriangleHaveArea)
 	}
 	{
 		CTriangle triangle(3.5, 6.4, 5.9);
-		BOOST_CHECK_EQUAL(triangle.GetArea(), 10.2118);
+		BOOST_CHECK_CLOSE(triangle.GetArea(), 10.2118, 0.001);
 	}
 	{
 		CTriangle triangle(5.75, 6.24, 10.50);
-		BOOST_CHECK_EQUAL(triangle.GetArea(), 15.179);
+		BOOST_CHECK_CLOSE(triangle.GetArea(), 15.179, 0.001);
 	}
 	{
 		CTriangle triangle(3, 4, 1);
